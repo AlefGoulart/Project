@@ -8,12 +8,20 @@ const FavoriteList = mongoose.model(
         title: {
             type: String,
             required: true
-        }
+        },
+        description: {
+            type: String,
+            required: true
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        user: Object,
+        adopter: Object
     },
 {timestamps: true})
 )
 
-FavoriteList.belongsTo(User)
-User.hasMany(FavoriteList)
-
-module.exports = User
+module.exports = FavoriteList
