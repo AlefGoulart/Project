@@ -7,5 +7,6 @@ const verifyToken = require('../helpers/verify-token')
 
 router.get('/products', FavoriteProductController.listProducts);
 router.post('/add', verifyToken, FavoriteProductController.addProductToList);
+router.delete('/remove/:id', verifyToken, FavoriteProductController.removeProductFromList);
 
 module.exports = router;

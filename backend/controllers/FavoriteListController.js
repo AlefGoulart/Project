@@ -1,4 +1,6 @@
 const FavoriteList = require("../models/FavoriteList");
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 // helpers
 const getToken = require("../helpers/get-token");
@@ -61,5 +63,37 @@ module.exports = class FavoriteListController {
     res.status(200).json({
       favoriteList: favoriteList,
     });
+  }
+
+  //remove a lista de favoritos com os itens favoritados
+  static async removeFavoriteListById(req, res) {
+
+    const id = req.params.id;
+
+    //valida o id da lista a ser removida
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "ID Inválido" });
+      return;
+    }
+
+    // verifica se existe lista pelo id
+    const existList = await FavoriteList.findOne({ _id: id });
+
+    if (!existList) {
+        res.status(404).json({ message: "Lista não encontrada"});
+    }
+
+    //checar se o usuário logado é dono na lista
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    if(existList.user._id.toString() !== user._id.toString()) {
+        return res.status(422).json({ message: "Houve um problema ao processar a solicitação"});
+    }
+
+    await FavoriteList.findByIdAndDelete(id)
+
+    res.status(200).json({message: "Lista removida com sucesso!"})
+
   }
 };

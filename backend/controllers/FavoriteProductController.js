@@ -86,4 +86,38 @@ module.exports = class FavoriteProductController {
         .json({ message: "Erro ao adicionar produto", error: error.message });
     }
   }
+
+  static async removeProductFromList(req, res) {
+    
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    if (!user) return res.status(401).json({ message: 'Não autorizado' });
+  
+    const { id } = req.params;
+  
+    const list = await FavoriteList.findOne({ user: user._id });
+
+    if (!list) {
+      return res.status(404).json({ message: 'Lista não encontrada' });
+    }
+  
+    // Verifica se o produto está na lista
+    const productIndex = list.products.findIndex(product => product.id === Number(id));
+  
+    if (productIndex === -1) {
+      return res.status(404).json({ message: 'Produto não encontrado na lista' });
+    }
+  
+    // Remove o produto
+    list.products.splice(productIndex, 1);
+  
+    try {
+      await list.save();
+      res.status(200).json({ message: 'Produto removido com sucesso'});
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao remover produto'});
+    }
+  }
+
 };
