@@ -16,9 +16,9 @@ module.exports = class FavoriteListController {
     }
 
     if (!description) {
-        res.status(422).json({ message: "Descrição é obrigatório" });
-        return;
-      }
+      res.status(422).json({ message: "Descrição é obrigatório" });
+      return;
+    }
 
     // usuário da list
     const token = getToken(req);
@@ -29,36 +29,37 @@ module.exports = class FavoriteListController {
       title,
       description,
       user: user._id,
+      products: [],
     });
 
     try {
-
       const existList = await FavoriteList.findOne({ user: user._id });
 
       // verifica se existe lista para usuário e salva
       if (!existList) {
-
         const newFavoriteList = await favoriteList.save();
-        res.status(201).json({ message: "Lista cadastrada com sucesso!", newFavoriteList });
-
+        res
+          .status(201)
+          .json({ message: "Lista cadastrada com sucesso!", newFavoriteList });
       } else {
-
-        return res.status(422).json({ message: "Usuário já possui lista cadastrada" });
-
+        return res
+          .status(422)
+          .json({ message: "Usuário já possui lista cadastrada" });
       }
     } catch (error) {
       res.status(500).json({ message: error });
     }
   }
 
-  // retorna a lita dos usuários
-  static async getList (req, res) {
+  // retorna a lista dos usuários
+  static async getList(req, res) {
+    const token = getToken(req);
+    const user = await getUserByToken(token);
 
-    const favoriteList = await FavoriteList.find()
+    const favoriteList = await FavoriteList.findOne({ user: user._id });
 
     res.status(200).json({
-        favoriteList: favoriteList,
-    })
-
+      favoriteList: favoriteList,
+    });
   }
 };

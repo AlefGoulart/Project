@@ -14,9 +14,11 @@ app.use(express.static('public'))
 
 // Rotas
 const UserRoutes = require('./routes/UserRoutes')
-const FavoritListRoutes = require('./routes/FavoriteListRoutes')
+const FavoritListeRoutes = require('./routes/FavoriteListRoutes')
+const FavoriteProductRoutes = require('./routes/FavoriteProductRoutes')
 
 app.use('/users', UserRoutes)
-app.use('/favoriteLists', FavoritListRoutes)
+app.use('/favoriteLists', FavoritListeRoutes)
+app.use('/favoriteProducts', FavoriteProductRoutes)
 
 app.listen(5000)

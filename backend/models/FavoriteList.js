@@ -1,27 +1,56 @@
-const mongoose = require('../db/conn')
-const {Schema} = mongoose
-const User = require('./User')
+const mongoose = require("../db/conn");
+const { Schema } = mongoose;
+const User = require("./User");
 
 const FavoriteList = mongoose.model(
-    'FavoriteList',
-    new Schema({
-        title: {
+  "FavoriteList",
+  new Schema(
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: true,
+      },
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      products: [
+        {
+          id: {
+            type: Number,
+            required: true,
+          },
+          title: {
             type: String,
-            required: true
-        },
-        description: {
+            required: true,
+          },
+          price: {
+            type: Number,
+            required: true,
+          },
+          description: {
             type: String,
-            required: true
+            required: true,
+          },
+          category: {
+            type: String,
+            required: true,
+          },
+          image: {
+            type: String
+          }
         },
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
-        user: Object,
-        adopter: Object
+      ],
+      user: Object,
+      adopter: Object,
     },
-{timestamps: true})
-)
+    { timestamps: true }
+  )
+);
 
-module.exports = FavoriteList
+module.exports = FavoriteList;
