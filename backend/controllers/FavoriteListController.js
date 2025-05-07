@@ -1,5 +1,5 @@
 const FavoriteList = require("../models/FavoriteList");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
 // helpers
@@ -40,7 +40,7 @@ module.exports = class FavoriteListController {
       // verifica se existe lista para usuário e salva
       if (!existList) {
         const newFavoriteList = await favoriteList.save();
-        res
+        return res
           .status(201)
           .json({ message: "Lista cadastrada com sucesso!", newFavoriteList });
       } else {
@@ -67,7 +67,6 @@ module.exports = class FavoriteListController {
 
   //remove a lista de favoritos com os itens favoritados
   static async removeFavoriteListById(req, res) {
-
     const id = req.params.id;
 
     //valida o id da lista a ser removida
@@ -80,20 +79,65 @@ module.exports = class FavoriteListController {
     const existList = await FavoriteList.findOne({ _id: id });
 
     if (!existList) {
-        res.status(404).json({ message: "Lista não encontrada"});
+      return res.status(404).json({ message: "Lista não encontrada" });
     }
 
     //checar se o usuário logado é dono na lista
     const token = getToken(req);
     const user = await getUserByToken(token);
 
-    if(existList.user._id.toString() !== user._id.toString()) {
-        return res.status(422).json({ message: "Houve um problema ao processar a solicitação"});
+    if (existList.user._id.toString() !== user._id.toString()) {
+      return res
+        .status(422)
+        .json({ message: "Houve um problema ao processar a solicitação" });
     }
 
-    await FavoriteList.findByIdAndDelete(id)
+    await FavoriteList.findByIdAndDelete(id);
 
-    res.status(200).json({message: "Lista removida com sucesso!"})
+    return res.status(200).json({ message: "Lista removida com sucesso!" });
+  }
+
+  // Edição de uma lista
+  static async updateFavoriteList(req, res) {
+    const id = req.params.id;
+
+    const { title, description } = req.body;
+
+    const existList = await FavoriteList.findOne({ _id: id });
+
+    const updateData = {}
+
+    if (!existList) {
+      return res.status(404).json({ message: "Lista não encontrada" });
+    }
+
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    if (existList.user._id.toString() !== user._id.toString()) {
+      return res
+        .status(422)
+        .json({ message: "Houve um problema ao processar a solicitação" });
+    }
+
+    // validações
+    if (!title) {
+        res.status(422).json({ message: "Titulo é obrigatório" });
+        return;
+      } else {
+        updateData.title = title
+      }
+  
+      if (!description) {
+        res.status(422).json({ message: "Descrição é obrigatório" });
+        return;
+      } else {
+        updateData.description = description
+      }
+
+      await FavoriteList.findByIdAndUpdate(id, updateData)
+
+      res.status(200).json({message: "Lista Atualizada com sucesso!"})
 
   }
 };

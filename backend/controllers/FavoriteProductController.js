@@ -114,9 +114,9 @@ module.exports = class FavoriteProductController {
   
     try {
       await list.save();
-      res.status(200).json({ message: 'Produto removido com sucesso'});
+      return res.status(200).json({ message: 'Produto removido com sucesso'});
     } catch (error) {
-      res.status(500).json({ message: 'Erro ao remover produto'});
+      return res.status(500).json({ message: 'Erro ao remover produto'});
     }
   }
 
