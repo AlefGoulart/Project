@@ -65,6 +65,26 @@ module.exports = class FavoriteListController {
     });
   }
 
+  static async getListById(req, res) {
+    const { id } = req.params;
+  
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+  
+    try {
+      // Busca por ID e garante que a lista é do usuário autenticado
+      const favoriteList = await FavoriteList.findOne({ _id: id, user: user._id });
+  
+      if (!favoriteList) {
+        return res.status(404).json({ message: 'Lista não encontrada ou acesso não autorizado.' });
+      }
+  
+      res.status(200).json({ favoriteList });
+    } catch (err) {
+      res.status(500).json({ message: 'Erro ao buscar a lista de favoritos.' });
+    }
+  }
+
   //remove a lista de favoritos com os itens favoritados
   static async removeFavoriteListById(req, res) {
     const id = req.params.id;

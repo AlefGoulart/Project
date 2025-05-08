@@ -13,9 +13,11 @@ import Home from "./components/pages/Home";
 import Profile from "./components/pages/User/Profile";
 import FavoriteLists from "./components/pages/FavoriteProducts/FavoriteLists";
 import AddFavoriteList from "./components/pages/FavoriteProducts/AddFavoriteList";
+import EditFavoriteList from "./components/pages/FavoriteProducts/EditFavoriteList";
 
 /* Context */
 import { UserProvider } from "./context/UserContext";
+
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
             <Route path="/user/profile" element={<Profile />}></Route>
             <Route path="/favoriteProducts/favoriteLists" element={<FavoriteLists />}></Route>
             <Route path="/favoriteProducts/add" element={<AddFavoriteList />}></Route>
+            <Route path="/favoriteProducts/edit/:id" element={<EditFavoriteList />}></Route>
             <Route path="/" element={<Home />}></Route>
           </Routes>
         </Container>

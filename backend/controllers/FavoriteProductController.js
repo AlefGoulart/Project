@@ -12,7 +12,7 @@ module.exports = class FavoriteProductController {
       const response = await axios.get("https://fakestoreapi.com/products");
       res.status(200).json(response.data);
     } catch (err) {
-      res.status(500).json({ message: "Erro ao buscar produtos" });
+      res.status(500).json({ message: "API externa fora do ar, atualize a pagina" });
     }
   }
 
