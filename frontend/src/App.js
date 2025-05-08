@@ -11,6 +11,8 @@ import Login from "./components/pages/Auth/Login";
 import Register from "./components/pages/Auth/Register";
 import Home from "./components/pages/Home";
 import Profile from "./components/pages/User/Profile";
+import FavoriteLists from "./components/pages/FavoriteProducts/FavoriteLists";
+import AddFavoriteList from "./components/pages/FavoriteProducts/AddFavoriteList";
 
 /* Context */
 import { UserProvider } from "./context/UserContext";
@@ -26,7 +28,8 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/user/profile" element={<Profile />}></Route>
-            <Route path="/user/favoriteProducts" element={<Profile />}></Route>
+            <Route path="/favoriteProducts/favoriteLists" element={<FavoriteLists />}></Route>
+            <Route path="/favoriteProducts/add" element={<AddFavoriteList />}></Route>
             <Route path="/" element={<Home />}></Route>
           </Routes>
         </Container>
