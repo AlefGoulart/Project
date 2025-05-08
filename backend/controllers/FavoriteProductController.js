@@ -5,6 +5,8 @@ const FavoriteList = require("../models/FavoriteList");
 const getToken = require("../helpers/get-token");
 const getUserByToken = require("../helpers/get-user-by-token");
 
+const sendFavoriteNotification = require("../services/MailSendService");
+
 module.exports = class FavoriteProductController {
   // listar produtos da API
   static async listProducts(req, res) {
@@ -77,6 +79,9 @@ module.exports = class FavoriteProductController {
 
     try {
       await listUser.save();
+
+      await sendFavoriteNotification(user.email, title);
+
       return res
         .status(200)
         .json({ message: "Produto adicionado à lista", listUser });
