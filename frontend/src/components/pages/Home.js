@@ -96,7 +96,7 @@ function Home() {
     fetch("http://localhost:5000/favoriteProducts/products")
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Erro ao buscar produtos");
+          throw new Error("Não foi possivel conectar a API Externa! Atualize a pagina");
         }
         return res.json();
       })

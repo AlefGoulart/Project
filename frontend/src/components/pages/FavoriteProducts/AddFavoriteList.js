@@ -4,6 +4,7 @@ import styles from "./AddFavoriteList.module.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 /* componentes */
 import FavoriteListForm from "../../form/FavoriteListForm";
@@ -50,9 +51,10 @@ function AddFavoriteList() {
   }
 
   return (
-    <section className={styles.addListFavorite_header}>
-      <div>
+    <section>
+      <div className={styles.addListFavorite_header}>
         <h1>Criar lista de favoritos</h1>
+        <Link to="/favoriteProducts/favoriteLists">Voltar</Link>
       </div>
       <FavoriteListForm
         handleSubmit={registerFavoriteList}

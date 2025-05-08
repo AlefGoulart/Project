@@ -1,0 +1,89 @@
+.favoritelist_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.favoritelist_header h1 {
+  margin: 0;
+}
+
+.favoritelist_header a {
+  text-decoration: none;
+  background-color: #16479d;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 0.5em 0.8em;
+  border-radius: 5px;
+  border: 2px solid #16479d;
+}
+
+.favoritelist_header a:hover {
+  background-color: transparent;
+  color: #16479d;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.productCard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  width: 200px;
+  text-align: center;
+}
+
+.productCard:hover {
+  transform: translateY(-5px);
+}
+
+.productTitle {
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #4464f5;
+  border-radius: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.productImage {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.productPrice {
+  font-weight: bold;
+}
+
+.favoriteButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Botão verde (favoritar) */
+.favorite {
+  background-color: green;
+}
+
+/* Botão vermelho (desfavoritar) */
+.unfavorite {
+  background-color: red;
+}

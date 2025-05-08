@@ -1,12 +1,9 @@
 import api from "../../../utils/api";
 
 import { useState, useEffect } from "react";
-
-import styles from "./AddFavoriteList.module.css";
-
+import styles from "./EditFavoriteList.module.css";
 import FavoriteListForm from "../../form/FavoriteListForm";
-
-import FavoriteLists from "./FavoriteLists";
+import { Link } from "react-router-dom";
 
 /* Pegar o ID da lista para buscar por ID*/
 import { useParams, useNavigate } from 'react-router-dom'
@@ -65,13 +62,15 @@ function EditFavoriteList() {
 
   return (
     <section>
-      <div className={styles.addListFavorite_header}>
+      <div className={styles.editFavoriteList_header}>
         <h1>Editando a lista: {favoriteList.title}</h1>
-        <p>Após edição os dados serão atualizados</p>
+        <Link to="/favoriteProducts/favoriteLists">Voltar</Link>
       </div>
+      <div className={styles.container}>
       {favoriteList.title && (
         <FavoriteListForm handleSubmit={updateFavoriteList} btnText="Atualizar" favoriteListData={favoriteList}/>
       )}
+      </div>
     </section>
   );
 }

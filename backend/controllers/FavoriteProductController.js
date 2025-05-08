@@ -12,7 +12,7 @@ module.exports = class FavoriteProductController {
       const response = await axios.get("https://fakestoreapi.com/products");
       res.status(200).json(response.data);
     } catch (err) {
-      res.status(500).json({ message: "API externa fora do ar, atualize a pagina" });
+      res.status(500).json({ message: "Não foi possivel conectar a API Externa! Atualize a pagina" });
     }
   }
 

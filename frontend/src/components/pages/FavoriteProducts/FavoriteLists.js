@@ -13,6 +13,9 @@ function FavoriteLists() {
   const [token] = useState(localStorage.getItem("token") || "");
   const { setFlashMessage } = useFlashMessage();
 
+  const [showModal, setShowModal] = useState(false);
+  const [listToDelete, setListToDelete] = useState(null);
+
   useEffect(() => {
     api
       .get("/favoriteLists", {
@@ -41,39 +44,70 @@ function FavoriteLists() {
       return err.response.data
     })
     setFlashMessage(data.message, msgType)
+    setShowModal(false);
+    setListToDelete(null);
   }
+
+  const handleDeleteClick = (listId) => {
+    setListToDelete(listId);
+    setShowModal(true);
+  };
+
+  const cancelDelete = () => {
+    setShowModal(false);
+    setListToDelete(null);
+  };
 
   return (
     <section>
       <div className={styles.favoritelist_header}>
         <h1>Minha Lista</h1>
         {favoriteLists ? (
-         <p></p>
+          <p></p>
         ) : (
           <Link to="/favoriteProducts/add">Criar Lista</Link>
         )}
       </div>
+
       <div className={styles.favoritelist_container}>
         {favoriteLists ? (
           <div className={styles.favoritelist_row} key={favoriteLists._id}>
-            <span className="bold">Titulo: </span><span>{favoriteLists.title}</span>
-            <span className="bold">Descrição: </span><span>{favoriteLists.description}</span>
+            <span className="bold">Titulo: </span>
+            <span>{favoriteLists.title}</span>
+            <span className="bold">Descrição: </span>
+            <span>{favoriteLists.description}</span>
             <div className={styles.actions}>
               <Link to={`/favoriteProducts/edit/${favoriteLists._id}`}>
                 Editar Lista
               </Link>
-              <Link to={`/favoriteProducts/edit/${favoriteLists._id}`}>
+              <Link to={`/favoriteProducts/view/${favoriteLists._id}`}>
                 Visualizar Produtos Favoritos
               </Link>
-              <button onClick={() => {
-                removeFavoriteList(favoriteLists._id)
-              }}>Excluir Lista</button>
+              <button onClick={() => handleDeleteClick(favoriteLists._id)}>
+                Excluir Lista
+              </button>
             </div>
           </div>
         ) : (
           <p>Não há lista cadastrada</p>
         )}
       </div>
+
+      {showModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <p>Tem certeza que deseja excluir esta lista? Os produtos favoritos serão tambem excluidos</p>
+            <div className={styles.modalActions}>
+              <button onClick={() => removeFavoriteList(listToDelete)} className={styles.confirmButton}>
+                Confirmar
+              </button>
+              <button onClick={cancelDelete} className={styles.cancelButton}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

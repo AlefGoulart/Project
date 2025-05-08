@@ -14,6 +14,7 @@ import Profile from "./components/pages/User/Profile";
 import FavoriteLists from "./components/pages/FavoriteProducts/FavoriteLists";
 import AddFavoriteList from "./components/pages/FavoriteProducts/AddFavoriteList";
 import EditFavoriteList from "./components/pages/FavoriteProducts/EditFavoriteList";
+import FavoriteProducts from "./components/pages/FavoriteProducts/FavoriteProducts";
 
 /* Context */
 import { UserProvider } from "./context/UserContext";
@@ -33,6 +34,7 @@ function App() {
             <Route path="/favoriteProducts/favoriteLists" element={<FavoriteLists />}></Route>
             <Route path="/favoriteProducts/add" element={<AddFavoriteList />}></Route>
             <Route path="/favoriteProducts/edit/:id" element={<EditFavoriteList />}></Route>
+            <Route path="/favoriteProducts/view/:id" element={<FavoriteProducts />}></Route>
             <Route path="/" element={<Home />}></Route>
           </Routes>
         </Container>
