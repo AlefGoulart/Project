@@ -11,15 +11,15 @@ const transport = nodemailer.createTransport({
 });
 
 const sender = {
-  address: "hello@example.com",
+  address: "alefgoularte@gmail.com",
   name: "Mailtrap Test",
 };
 
 async function sendFavoriteNotification(userEmail, productTitle) {
   try {
     await transport.sendMail({
-      from: sender,
-      to: [userEmail],
+      from: [userEmail],
+      to: sender,
       subject: "Produto favoritado com sucesso!",
       text: `Você favoritou o produto: ${productTitle}`,
       category: "Favorito",
