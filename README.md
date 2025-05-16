@@ -1,4 +1,4 @@
-# LuizaLabs - Desafio técnico - Dev Full Stack
+# LuizaLabs - Desafio técnico
 ## Introdução:
 
 Desenvolvimento de um sistema no qual será permitido que o usuário realize login, visando a proteção de suas informações, bem como será realizado a listagem de produtos oriundos de uma API externa permitindo que o cliente crie uma lista de favoritos e favorite esses produtos com permissão máxima de 5 itens em sua lista.
